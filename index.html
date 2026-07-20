@@ -3,49 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cap AR</title>
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+    <title>Arca AR</title>
     
-    <style>
-        body { margin: 0; background-color: #fbfbfb; }
-        model-viewer { width: 100vw; height: 100dvh; }
+    <!-- 1. Подключаем 3D-фреймворк A-Frame -->
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <!-- 1. Подключаем 3D-фреймворк A-Frame -->
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
         
-        /* Скрываем стандартную кнопку model-viewer, чтобы она не мешалась */
-        model-viewer::part(default-ar-button) { display: none; }
-
-        /* Наша неубиваемая кастомная кнопка */
-        .custom-ar-button {
-            position: absolute;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #007aff;
-            color: white;
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-            font-weight: 600;
-            padding: 14px 24px;
-            border-radius: 12px;
-            text-decoration: none;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            z-index: 999;
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+        .mindar-ui-loading {
+            background-color: #fbfbfb !important;
         }
     </style>
 </head>
 <body>
 
-    <model-viewer
-        src="model.glb"
-        ios-src="model.usdz"
-        alt="3D модель кепки"
-        ar
-        camera-controls
-        touch-action="none">
-        
-        <a slot="ar-button" class="custom-ar-button" href="model.usdz" rel="ar">
-            Guardare in AR
-        </a>
-        
-    </model-viewer>
+    <!--
+      AR-СЦЕНА:
+      imageTargetSrc указывает на файл маркера targets.mind
+    -->
+    <a-scene
+        mindar-image="imageTargetSrc: ./targets.mind;"
+        color-space="sRGB"
+        renderer="colorManagement: true, physicallyCorrectLights: true"
+        vr-mode-ui="enabled: false"
+        device-orientation-permission-ui="enabled: false">
+      
+        <!-- Загрузка ресурсов (3D-модели) -->
+        <a-assets>
+            <a-asset-item id="arcaModel" src="model.glb"></a-asset-item>
+        </a-assets>
+
+        <!-- Камера сцены -->
+        <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+        <!--
+          МАРКЕР (targetIndex: 0):
+          Когда камера видит фасад дома из targets.mind,
+          внутри него отрисовывается модель.
+        -->
+        <a-mindar-image-target targetIndex="0">
+            <a-gltf-model
+                id="arcaEntity"
+                src="#arcaModel"
+                position="0 0 0"
+                rotation="0 0 0"
+                scale="1 1 1">
+            </a-gltf-model>
+        </a-mindar-image-target>
+
+    </a-scene>
 
 </body>
 </html>
