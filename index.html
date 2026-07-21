@@ -46,15 +46,20 @@
           Когда камера видит фасад дома из targets.mind,
           внутри него отрисовывается модель.
         -->
+        <!-- МАРКЕР (targetIndex: 0) -->
         <a-mindar-image-target targetIndex="0">
-            <a-gltf-model
-                id="arcaEntity"
-                src="#arcaModel"
-                position="0 0 0"
-                rotation="0 0 0"
-                scale="1 1 1">
-            </a-gltf-model>
+            <!-- Временно ставим красный куб размером 50х50 см вместо кепки -->
+            <a-box position="0 0 0" scale="0.5 0.5 0.5" color="red"></a-box>
         </a-mindar-image-target>
+<!--        <a-mindar-image-target targetIndex="0">-->
+<!--            <a-gltf-model-->
+<!--                id="arcaEntity"-->
+<!--                src="#arcaModel"-->
+<!--                position="0 0 0"-->
+<!--                rotation="0 0 0"-->
+<!--                scale="1 1 1">-->
+<!--            </a-gltf-model>-->
+<!--        </a-mindar-image-target>-->
 
     </a-scene>
 
