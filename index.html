@@ -53,17 +53,10 @@
             smoothTolerance="0.01"
             smoothThreshold="5">
             
-            <!-- 1. ГИГАНТСКИЙ КУБ размером в 3000 единиц в точке (0,0,0) -->
-            <a-box
-                position="0 0 0"
-                scale="3000 3000 3000"
-                material="color: red; opacity: 0.6;">
-            </a-box>
-
-            <!-- 2. ВАША МОДЕЛЬ с экстремальным масштабом 1500 -->
+            <!-- Убираем красный куб и ставим модель с адекватным масштабом (например, 350) -->
             <a-entity
                 gltf-model="model_cap.glb"
-                scale="1500 1500 1500"
+                scale="350 350 350"
                 position="0 0 0"
                 rotation="-90 0 0">
             </a-entity>
