@@ -1,51 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
-    <meta charset="utf-8">
-    <title>Arca AR - MindAR</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cap AR</title>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
     
-    <!-- A-Frame -->
-    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-    <!-- MindAR library -->
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-
     <style>
-        body {
-            margin: 0;
-            overflow: hidden;
+        body { margin: 0; background-color: #fbfbfb; }
+        model-viewer { width: 100vw; height: 100dvh; }
+        
+        /* Скрываем стандартную кнопку model-viewer, чтобы она не мешалась */
+        model-viewer::part(default-ar-button) { display: none; }
+
+        /* Наша неубиваемая кастомная кнопка */
+        .custom-ar-button {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #007aff;
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 600;
+            padding: 14px 24px;
+            border-radius: 12px;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 999;
         }
     </style>
 </head>
-
 <body>
-    <a-scene
-        mindar-image="imageTargetSrc: ./targets.mind;"
-        color-space="sRGB"
-        renderer="colorManagement: true, physicallyCorrectLights"
-        vr-mode-ui="enabled: false"
-        device-orientation-permission-ui="enabled: false">
+
+    <model-viewer
+        src="model.glb"
+        ios-src="model.usdz"
+        alt="3D modello di arca"
+        ar
+        camera-controls
+        touch-action="none">
         
-        <a-assets>
-            <!-- Загружаем модель -->
-            <a-asset-item id="capModel" src="puppy_and_cap_light.glb"></a-asset-item>
-        </a-assets>
+        <a slot="ar-button" class="custom-ar-button" href="model.usdz" rel="ar">
+            Guardare in AR
+        </a>
+        
+    </model-viewer>
 
-        <!-- Камера MindAR -->
-        <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
-
-        <!-- Маркер (берется первый целевой объект из targets.mind) -->
-        <a-entity mindar-image-target="targetIndex: 0">
-            
-            <!-- Ваша кепка -->
-            <a-gltf-model
-                src="#capModel"
-                position="0 0.25 0.05"
-                scale="0.35 0.35 0.35"
-                rotation="0 180 0">
-            </a-gltf-model>
-
-        </a-entity>
-    </a-scene>
 </body>
 </html>
+
